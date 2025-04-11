@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sound Effect Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <canvas id="visualizer" width="600" height="100"></canvas>
+    <h1>🎧 Search Sound Effects</h1>
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Enter keyword (e.g. thunder)" />
+      <button onclick="searchFreesound()">🔍 Search</button>
+    </div>
+    <div id="search-results"></div>
+
+    <hr />
+
+    <h2>🎚️ Generate Custom Sound</h2>
+    <label for="frequency">Frequency (Hz): <span id="freq-value">440</span></label>
+    <input type="range" id="frequency" min="100" max="2000" value="440" />
+
+    <label for="duration">Duration (s): <span id="dur-value">1</span></label>
+    <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1" />
+
+    <label for="waveform">Waveform Type:</label>
+    <select id="waveform">
+      <option value="sine">Sine</option>
+      <option value="square">Square</option>
+      <option value="triangle">Triangle</option>
+      <option value="sawtooth">Sawtooth</option>
+    </select>
+
+    <label for="volume">Volume: <span id="vol-value">0.5</span></label>
+    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
+
+    <button id="play-btn">▶️ Play Sound</button>
+    <button id="record-btn">🔴 Record</button>
+    <a id="download-link" style="display: none">⬇️ Download</a>
+
+    <div id="custom-sound-presets">
+      <h3>🎵 Preset Effects</h3>
+      <button onclick="playPreset(500, 0.5, 'square')">Beep</button>
+      <button onclick="playPreset(880, 1, 'triangle')">Chime</button>
+      <button onclick="playPreset(1200, 0.3, 'sawtooth')">Alert</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

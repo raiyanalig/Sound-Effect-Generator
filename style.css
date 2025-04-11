@@ -1,0 +1,145 @@
+
+body {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e2e8f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .container {
+    background-color: #1e293b;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+  }
+  
+  h1, h2, h3 {
+    color: #38bdf8;
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  span {
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+  
+  select, input[type="range"], input[type="text"] {
+    margin-top: 8px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    width: 100%;
+    background: #0f172a;
+    color: #e2e8f0;
+  }
+  
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #38bdf8;
+    color: #1e293b;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+    background-color: #0ea5e9;
+  }
+  
+  .search-box {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .search-box input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  #search-results {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .search-result-list {
+    background: #1e293b;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .search-item {
+    padding: 10px;
+    border-bottom: 1px solid #334155;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .search-item:hover {
+    background-color: #0f172a;
+  }
+  
+  .sound-card {
+    background: #334155;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    color: #fff;
+    box-shadow: 0 0 8px #00000033;
+    position: relative;
+  }
+  
+  canvas.sound-visualizer,
+  canvas#visualizer {
+    margin: 20px auto;
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: 100px;
+    background-color: #0f172a;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  }
+  
+  #download-link {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #22c55e;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  
+  #custom-sound-presets button {
+    margin: 8px;
+    background-color: #3b82f6;
+    color: white;
+  }
