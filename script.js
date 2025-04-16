@@ -1,4 +1,3 @@
-
 const playBtn = document.getElementById('play-btn');
 const freqSlider = document.getElementById('frequency');
 const durSlider = document.getElementById('duration');
@@ -15,11 +14,9 @@ const searchResults = document.getElementById('search-results');
 let chunks = [];
 let mediaRecorder;
 
-
 freqSlider.oninput = () => freqValue.textContent = freqSlider.value;
 durSlider.oninput = () => durValue.textContent = durSlider.value;
 volumeSlider.oninput = () => volumeValue.textContent = volumeSlider.value;
-
 
 playBtn.addEventListener('click', () => {
   playSound(
@@ -95,28 +92,44 @@ function visualize(audioCtx, source) {
 const apiKey = 'yeXT4zxMyiJYNqexEsD1SZZOVAxP1IqUbMP4o9y0';
 
 async function searchFreesound() {
-  const query = document.getElementById('search-input').value.trim();
+  const input = document.getElementById('search-input');
+  const query = input.value.trim();
+  const searchBtn = document.querySelector('.search-box button');
+
   if (!query) return;
+
+  // Set loading state
+  searchResults.innerHTML = '<p>🔍 Searching...</p>';
+  searchBtn.disabled = true;
+  input.disabled = true;
+  searchBtn.textContent = '⏳ Searching...';
+
   const endpoint = `https://freesound.org/apiv2/search/text/?query=${encodeURIComponent(query)}&fields=id,name,previews&token=${apiKey}`;
   try {
     const res = await fetch(endpoint);
     const data = await res.json();
+
     if (!data.results.length) {
       searchResults.innerHTML = '<p>No results found.</p>';
-      return;
+    } else {
+      searchResults.innerHTML = '<div class="search-result-list"></div>';
+      const list = searchResults.querySelector('.search-result-list');
+      data.results.slice(0, 5).forEach((sound) => {
+        const item = document.createElement('div');
+        item.className = 'search-item';
+        item.textContent = sound.name;
+        item.onclick = () => loadSoundPlayer(sound);
+        list.appendChild(item);
+      });
     }
-    searchResults.innerHTML = '<div class="search-result-list"></div>';
-    const list = searchResults.querySelector('.search-result-list');
-    data.results.slice(0, 5).forEach((sound) => {
-      const item = document.createElement('div');
-      item.className = 'search-item';
-      item.textContent = sound.name;
-      item.onclick = () => loadSoundPlayer(sound);
-      list.appendChild(item);
-    });
   } catch (err) {
     console.error('Fetch error:', err);
-    searchResults.innerHTML = '<p>Error fetching sounds.</p>';
+    searchResults.innerHTML = '<p>⚠️ Error fetching sounds.</p>';
+  } finally {
+    // Restore UI state
+    searchBtn.disabled = false;
+    input.disabled = false;
+    searchBtn.textContent = '🔍 Search';
   }
 }
 
