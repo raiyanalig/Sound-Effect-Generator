@@ -3,50 +3,400 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sound Effect Generator</title>
+  <title>Sound Effect Generator Pro DJ</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
-  <div class="container">
-    <canvas id="visualizer" width="600" height="100"></canvas>
-    <h1>🎧 Search Sound Effects</h1>
-    <div class="search-box">
-      <input type="text" id="search-input" placeholder="Enter keyword (e.g. thunder)" />
-      <button onclick="searchFreesound()">🔍 Search</button>
+  <div class="dj-console">
+    <!-- Header section with visualizer -->
+    <div class="header-section">
+      <div class="title-bar">
+        <h1><i class="fas fa-headphones"></i> Sound Effects DJ Console</h1>
+      </div>
+      <div id="visualizer-container">
+        <canvas id="visualizer" width="800" height="100"></canvas>
+      </div>
     </div>
-    <div id="search-results"></div>
-
-    <hr />
-
-    <h2>🎚️ Generate Custom Sound</h2>
-    <label for="frequency">Frequency (Hz): <span id="freq-value">440</span></label>
-    <input type="range" id="frequency" min="100" max="2000" value="440" />
-
-    <label for="duration">Duration (s): <span id="dur-value">1</span></label>
-    <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1" />
-
-    <label for="waveform">Waveform Type:</label>
-    <select id="waveform">
-      <option value="sine">Sine</option>
-      <option value="square">Square</option>
-      <option value="triangle">Triangle</option>
-      <option value="sawtooth">Sawtooth</option>
-    </select>
-
-    <label for="volume">Volume: <span id="vol-value">0.5</span></label>
-    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
-
-    <button id="play-btn">▶️ Play Sound</button>
-    <button id="record-btn">🔴 Record</button>
-    <a id="download-link" style="display: none">⬇️ Download</a>
-
-    <div id="custom-sound-presets">
-      <h3>🎵 Preset Effects</h3>
-      <button onclick="playPreset(500, 0.5, 'square')">Beep</button>
-      <button onclick="playPreset(880, 1, 'triangle')">Chime</button>
-      <button onclick="playPreset(1200, 0.3, 'sawtooth')">Alert</button>
+    
+    <!-- Main content - DJ decks -->
+    <div class="main-content">
+      <!-- Left Deck - Sound Generator -->
+      <div class="left-deck">
+        <h2><i class="fas fa-sliders-h"></i> Sound Generator</h2>
+        
+        <!-- Sound Generator Controls -->
+        <div class="control-panel">
+          <!-- Digital displays -->
+          <div class="digital-displays">
+            <div class="digital-display">
+              <span id="freq-value">440</span> Hz
+            </div>
+            <div class="digital-display">
+              <span id="dur-value">1</span> s
+            </div>
+            <div class="digital-display">
+              <span id="vol-value">0.5</span>
+            </div>
+          </div>
+          
+          <!-- Generator controls -->
+          <div class="generator-controls">
+            <div class="fader-container">
+              <div class="fader-track">
+                <div class="fader-handle"></div>
+              </div>
+              <label class="fader-label">FREQ</label>
+              <input type="range" id="frequency" min="20" max="2000" value="440" class="hidden-range" />
+            </div>
+            
+            <div class="fader-container">
+              <div class="fader-track">
+                <div class="fader-handle"></div>
+              </div>
+              <label class="fader-label">DUR</label>
+              <input type="range" id="duration" min="0.1" max="10" step="0.1" value="1" class="hidden-range" />
+            </div>
+            
+            <div class="fader-container">
+              <div class="fader-track">
+                <div class="fader-handle"></div>
+              </div>
+              <label class="fader-label">VOL</label>
+              <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" class="hidden-range" />
+            </div>
+            
+            <div class="waveform-selector">
+              <label for="waveform">WAVEFORM</label>
+              <select id="waveform">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="triangle">Triangle</option>
+                <option value="sawtooth">Sawtooth</option>
+                <option value="custom">Custom</option>
+              </select>
+              
+              <div class="led-indicators">
+                <div class="led" id="led-sine"></div>
+                <div class="led" id="led-square"></div>
+                <div class="led" id="led-triangle"></div>
+                <div class="led" id="led-sawtooth"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Control buttons -->
+          <div class="button-group">
+            <button id="play-btn" class="play-button"><i class="fas fa-play"></i> Play</button>
+            <button id="stop-btn" class="stop-button"><i class="fas fa-stop"></i> Stop</button>
+            <button id="record-btn" class="record-button"><i class="fas fa-circle"></i> Record</button>
+            <a id="download-link" style="display: none"><i class="fas fa-download"></i> Download</a>
+          </div>
+        </div>
+        
+        <!-- EQ Section -->
+        <h3><i class="fas fa-equalizer"></i> Equalizer</h3>
+        <div class="eq-controls">
+          <div class="eq-slider">
+            <input type="range" id="eq-60" min="-20" max="20" value="0" orient="vertical" />
+            <span>60Hz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-170" min="-20" max="20" value="0" orient="vertical" />
+            <span>170Hz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-310" min="-20" max="20" value="0" orient="vertical" />
+            <span>310Hz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-600" min="-20" max="20" value="0" orient="vertical" />
+            <span>600Hz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-1k" min="-20" max="20" value="0" orient="vertical" />
+            <span>1kHz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-3k" min="-20" max="20" value="0" orient="vertical" />
+            <span>3kHz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-6k" min="-20" max="20" value="0" orient="vertical" />
+            <span>6kHz</span>
+          </div>
+          <div class="eq-slider">
+            <input type="range" id="eq-12k" min="-20" max="20" value="0" orient="vertical" />
+            <span>12kHz</span>
+          </div>
+        </div>
+        
+        <!-- Effects Section -->
+        <h3><i class="fas fa-magic"></i> Effects</h3>
+        <div class="control-panel">
+          <div class="generator-controls">
+            <div class="knob-container">
+              <div class="knob" id="reverb-knob"></div>
+              <div class="digital-display"><span id="reverb-value">0</span></div>
+              <span class="knob-label">REVERB</span>
+              <input type="range" id="reverb" min="0" max="1" step="0.01" value="0" class="hidden-range" />
+            </div>
+            
+            <div class="knob-container">
+              <div class="knob" id="delay-knob"></div>
+              <div class="digital-display"><span id="delay-value">0</span></div>
+              <span class="knob-label">DELAY</span>
+              <input type="range" id="delay" min="0" max="1" step="0.01" value="0" class="hidden-range" />
+            </div>
+            
+            <div class="knob-container">
+              <div class="knob" id="distortion-knob"></div>
+              <div class="digital-display"><span id="distortion-value">0</span></div>
+              <span class="knob-label">DISTORT</span>
+              <input type="range" id="distortion" min="0" max="100" value="0" class="hidden-range" />
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sound Mixer -->
+        <h3><i class="fas fa-random"></i> Mixer</h3>
+        <div class="control-panel sound-mixer">
+          <div class="mixer-tracks">
+            <div class="mixer-track" id="track1">
+              <h4>DECK A</h4>
+              <div class="digital-display"><span id="track1-freq-value">220</span> Hz</div>
+              
+              <label for="track1-waveform">Waveform:</label>
+              <select id="track1-waveform">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="triangle">Triangle</option>
+                <option value="sawtooth">Sawtooth</option>
+              </select>
+              
+              <div class="generator-controls">
+                <div class="fader-container track-fader">
+                  <div class="fader-track">
+                    <div class="fader-handle"></div>
+                  </div>
+                  <label class="fader-label">FREQ</label>
+                  <input type="range" id="track1-freq" min="20" max="2000" value="220" class="hidden-range" />
+                </div>
+                
+                <div class="fader-container track-fader">
+                  <div class="fader-track">
+                    <div class="fader-handle"></div>
+                  </div>
+                  <label class="fader-label">VOL</label>
+                  <input type="range" id="track1-vol" min="0" max="1" step="0.01" value="0.5" class="hidden-range" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="mixer-track" id="track2">
+              <h4>DECK B</h4>
+              <div class="digital-display"><span id="track2-freq-value">440</span> Hz</div>
+              
+              <label for="track2-waveform">Waveform:</label>
+              <select id="track2-waveform">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="triangle">Triangle</option>
+                <option value="sawtooth">Sawtooth</option>
+              </select>
+              
+              <div class="generator-controls">
+                <div class="fader-container track-fader">
+                  <div class="fader-track">
+                    <div class="fader-handle"></div>
+                  </div>
+                  <label class="fader-label">FREQ</label>
+                  <input type="range" id="track2-freq" min="20" max="2000" value="440" class="hidden-range" />
+                </div>
+                
+                <div class="fader-container track-fader">
+                  <div class="fader-track">
+                    <div class="fader-handle"></div>
+                  </div>
+                  <label class="fader-label">VOL</label>
+                  <input type="range" id="track2-vol" min="0" max="1" step="0.01" value="0.5" class="hidden-range" />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="button-group">
+            <button id="play-sync-btn" class="play-button"><i class="fas fa-sync"></i> Mix Decks</button>
+            <button id="record-sync-btn" class="record-button"><i class="fas fa-record-vinyl"></i> Record Mix</button>
+          </div>
+        </div>
+        
+        <!-- Sound Effect Pads -->
+        <h3><i class="fas fa-bolt"></i> Sound FX Pads</h3>
+        <div class="control-panel">
+          <div class="preset-pads">
+            <button onclick="playPreset('beep')" class="preset-pad">Beep</button>
+            <button onclick="playPreset('chime')" class="preset-pad">Chime</button>
+            <button onclick="playPreset('alert')" class="preset-pad">Alert</button>
+            <button onclick="playPreset('laser')" class="preset-pad">Laser</button>
+            <button onclick="playPreset('explosion')" class="preset-pad">Explosion</button>
+            <button onclick="playPreset('rain')" class="preset-pad">Rain</button>
+            <button onclick="playPreset('wind')" class="preset-pad">Wind</button>
+            <button onclick="playPreset('powerUp')" class="preset-pad">Power Up</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Deck - Sound Library -->
+      <div class="right-deck">
+        <h2><i class="fas fa-search"></i> Sample Library</h2>
+        
+        <div class="control-panel search-section">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder="Enter keyword (e.g. thunder)" />
+            <button onclick="searchFreesound()"><i class="fas fa-search"></i> Search</button>
+          </div>
+          <div id="search-results"></div>
+        </div>
+      </div>
     </div>
   </div>
+
   <script src="script.js"></script>
+  <script>
+    // Additional JS for DJ controller hardware simulation
+    document.addEventListener('DOMContentLoaded', function() {
+      // Connect fader handles to hidden range inputs
+      const setupFader = (faderContainer, rangeInput) => {
+        const track = faderContainer.querySelector('.fader-track');
+        const handle = faderContainer.querySelector('.fader-handle');
+        const input = document.getElementById(rangeInput);
+        
+        if (!track || !handle || !input) return;
+        
+        const updateFaderPosition = () => {
+          const min = parseFloat(input.min);
+          const max = parseFloat(input.max);
+          const val = parseFloat(input.value);
+          const percent = ((val - min) / (max - min)) * 100;
+          const trackHeight = track.offsetHeight;
+          const handleTop = trackHeight - (percent / 100 * trackHeight);
+          handle.style.top = handleTop + 'px';
+        };
+        
+        // Initialize position
+        updateFaderPosition();
+        
+        // Update when input changes
+        input.addEventListener('input', updateFaderPosition);
+        
+        // Make handle draggable
+        let isDragging = false;
+        handle.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          
+          const rect = track.getBoundingClientRect();
+          const trackHeight = rect.height;
+          let y = e.clientY - rect.top;
+          
+          // Constrain to track
+          y = Math.max(0, Math.min(trackHeight, y));
+          
+          // Calculate value
+          const percent = 1 - (y / trackHeight);
+          const min = parseFloat(input.min);
+          const max = parseFloat(input.max);
+          const newVal = min + percent * (max - min);
+          
+          // Update input value
+          input.value = newVal;
+          input.dispatchEvent(new Event('input'));
+          handle.style.top = y + 'px';
+        });
+        
+        document.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+      };
+      
+      // Setup all faders
+      document.querySelectorAll('.fader-container').forEach(fader => {
+        const rangeId = fader.querySelector('input[type="range"]').id;
+        setupFader(fader, rangeId);
+      });
+      
+      // Setup knobs
+      const setupKnob = (knob, rangeInput) => {
+        const input = document.getElementById(rangeInput);
+        if (!knob || !input) return;
+        
+        let isDragging = false;
+        let startY;
+        let startValue;
+        
+        const updateKnobRotation = () => {
+          const min = parseFloat(input.min);
+          const max = parseFloat(input.max);
+          const val = parseFloat(input.value);
+          const percent = ((val - min) / (max - min));
+          const degrees = percent * 270 - 135;
+          knob.style.transform = `rotate(${degrees}deg)`;
+        };
+        
+        // Initialize rotation
+        updateKnobRotation();
+        
+        // Update when input changes
+        input.addEventListener('input', updateKnobRotation);
+        
+        knob.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          startY = e.clientY;
+          startValue = parseFloat(input.value);
+          e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          
+          const deltaY = startY - e.clientY;
+          const min = parseFloat(input.min);
+          const max = parseFloat(input.max);
+          const range = max - min;
+          
+          // Adjust sensitivity
+          const newValue = startValue + deltaY * (range / 100);
+          const clampedValue = Math.max(min, Math.min(max, newValue));
+          
+          input.value = clampedValue;
+          input.dispatchEvent(new Event('input'));
+        });
+        
+        document.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+      };
+      
+      // Setup all knobs
+      setupKnob(document.getElementById('reverb-knob'), 'reverb');
+      setupKnob(document.getElementById('delay-knob'), 'delay');
+      setupKnob(document.getElementById('distortion-knob'), 'distortion');
+      
+      // Add LED indicators for waveform type
+      const updateWaveformLEDs = () => {
+        const waveform = document.getElementById('waveform').value;
+        document.querySelectorAll('.led').forEach(led => led.classList.remove('active'));
+        document.getElementById(`led-${waveform}`)?.classList.add('active');
+      };
+      
+      document.getElementById('waveform').addEventListener('change', updateWaveformLEDs);
+      updateWaveformLEDs();
+    });
+  </script>
 </body>
 </html>
