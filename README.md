@@ -2,7 +2,7 @@
 
 A web-based sound effect generator that allows users to **create, customize, visualize, record**, and **search sound effects** with real-time controls and waveform visualizations. Built using **HTML, CSS, and JavaScript**, this app leverages the Web Audio API and Freesound API to deliver a dynamic audio experience.
 
----
+--
 
 ## 🚀 Features
 
